@@ -1,0 +1,44 @@
+@startuml Database
+
+title Warehouse Database
+
+entity Product{
+    + Guid Id
+    + string Name
+    + string BarCode
+    + List<StockItem> StockItems
+    + Supplier Supplier
+}
+
+entity StockItem{
+    + Guid Id
+    + int Amount
+    + Product Product
+    + List<Movements> Movements
+}
+
+entity Movement{
+    + Guid Id
+    + int Amount
+    + MovementType Type
+    + StockItem StockItem
+}
+
+enum MovementType{
+    Příjem
+    Výdej
+    Přesun ve skladu
+}
+
+entity Supplier{
+    + Guid Id
+    + string Name
+    + List<Product> Products
+}
+
+Product <-- StockItem
+Product <-- Supplier
+StockItem <-- Movement
+Movement <-- MovementType
+
+@enduml
