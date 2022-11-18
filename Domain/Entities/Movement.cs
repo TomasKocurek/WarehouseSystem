@@ -2,11 +2,18 @@
 
 namespace Domain.Entities;
 
-public class Movement
+public class Movement : Entity<Guid>
 {
-    public Guid Id { get; set; }
     public int Amount { get; set; }
     public MovementType Type { get; set; }
     public StockItem StockItem { get; set; }
     public Guid StockItemId { get; set; }
+
+    public Movement() { }
+
+    public Movement(int amount, MovementType type)
+    {
+        Amount = amount;
+        Type = type;
+    }
 }

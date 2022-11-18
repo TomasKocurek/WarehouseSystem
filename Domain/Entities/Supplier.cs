@@ -1,8 +1,7 @@
 ﻿namespace Domain.Entities;
 
-public class Supplier
+public class Supplier : Entity<Guid>
 {
-    public Guid Id { get; set; }
     public string Name { get; set; }
     public List<Product> Products { get; set; }
 }
