@@ -1,0 +1,13 @@
+﻿@page "/catalog"
+@using Shared.Dto
+
+<PageTitle>Catalog</PageTitle>
+
+
+<HxGrid TItem="ProductDto" Responsive="true" DataProvider="GetGridData" PageSize="25">
+    <Columns>
+        <HxGridColumn TItem="ProductDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortString="@nameof(ProductDto.Name)" IsDefaultSortColumn="true" />
+        @*TODO proklik na suppliera*@
+        <HxGridColumn TItem="ProductDto" HeaderText="Supplier" ItemTextSelector="@(i => i.Supplier?.Name ?? "")" SortString="@nameof(ProductDto.Supplier)" />
+    </Columns>
+</HxGrid>

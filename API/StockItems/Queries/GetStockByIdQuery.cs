@@ -1,22 +1,26 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
 using Infrastructure.Repositories.StockRepositories;
 using MediatR;
+using Shared.Dto;
 
 namespace API.StockItems.Queries;
 
-public record class GetStockByIdQuery(string Id) : IRequest<Stock?>;
+public record class GetStockByIdQuery(string Id) : IRequest<StockDto?>;
 
-public class GetStockByIdQueryHandler : IRequestHandler<GetStockByIdQuery, Stock?>
+public class GetStockByIdQueryHandler : IRequestHandler<GetStockByIdQuery, StockDto?>
 {
     private readonly IStockRepository _stockRepository;
+    private readonly IMapper _mapper;
 
-    public GetStockByIdQueryHandler(IStockRepository stockRepository)
+    public GetStockByIdQueryHandler(IStockRepository stockRepository, IMapper mapper)
     {
         _stockRepository = stockRepository;
+        _mapper = mapper;
     }
 
-    public Task<Stock?> Handle(GetStockByIdQuery request, CancellationToken cancellationToken)
+    public async Task<StockDto?> Handle(GetStockByIdQuery request, CancellationToken cancellationToken)
     {
-        return _stockRepository.Get(new(request.Id));
+        var stock = await _stockRepository.Get(new(request.Id));
+        return _mapper.Map<StockDto>(stock);
     }
 }

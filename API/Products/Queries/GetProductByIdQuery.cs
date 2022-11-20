@@ -1,23 +1,26 @@
-﻿using Domain.Entities;
+﻿using AutoMapper;
 using Infrastructure.Repositories.ProductRepositories;
 using MediatR;
+using Shared.Dto;
 
-namespace API.Products.Queries
+namespace API.Products.Queries;
+
+public record class GetProductByIdQuery(string Id) : IRequest<ProductDto?>;
+
+public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto?>
 {
-    public record class GetProductByIdQuery(string Id) : IRequest<Product?>;
+    private readonly IProductRepository _productRepository;
+    private readonly IMapper _mapper;
 
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product?>
+    public GetProductByIdQueryHandler(IProductRepository productRepository, IMapper mapper)
     {
-        private readonly IProductRepository _productRepository;
+        _productRepository = productRepository;
+        _mapper = mapper;
+    }
 
-        public GetProductByIdQueryHandler(IProductRepository productRepository)
-        {
-            _productRepository = productRepository;
-        }
-
-        public Task<Product?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
-        {
-            return _productRepository.Get(new(request.Id));
-        }
+    public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+    {
+        var product = await _productRepository.Get(new(request.Id));
+        return _mapper.Map<ProductDto>(product);
     }
 }

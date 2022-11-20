@@ -1,5 +1,6 @@
 using Infrastructure;
 using MediatR;
+using Shared.Mapping;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
@@ -18,6 +19,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+
+//add automapper
+//todo
+builder.Services.AddAutoMapper(
+    typeof(MovementProfile),
+    typeof(ProductProfile),
+    typeof(StockItemProfile),
+    typeof(StockProfile),
+    typeof(SupplierProfile));
 
 var app = builder.Build();
 

@@ -1,9 +1,9 @@
 ﻿using API.Products.Commands;
 using API.Products.Queries;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
+using Shared.Dto;
 
 namespace API.Controllers;
 
@@ -19,13 +19,13 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult<List<Product>>> GetAllProducts()
+    public async Task<ActionResult<List<ProductDto>>> GetAllProducts()
     {
         return Ok(await _mediator.Send(new GetAllProductsQuery()));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Product?>> GetProductById([FromRoute] string id)
+    public async Task<ActionResult<ProductDto?>> GetProductById([FromRoute] string id)
     {
         return Ok(await _mediator.Send(new GetProductByIdQuery(id)));
     }

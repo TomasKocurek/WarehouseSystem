@@ -1,9 +1,9 @@
 ﻿using API.StockItems.Commands;
 using API.StockItems.Queries;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
+using Shared.Dto;
 
 namespace API.Controllers;
 
@@ -11,6 +11,7 @@ namespace API.Controllers;
 [ApiController]
 public class StockItemsController : ControllerBase
 {
+    //todo dto
     private readonly IMediator _mediator;
 
     public StockItemsController(IMediator mediator)
@@ -25,7 +26,7 @@ public class StockItemsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<StockItem?>> GetStockItemById([FromRoute] string id)
+    public async Task<ActionResult<StockItemDto?>> GetStockItemById([FromRoute] string id)
     {
         return Ok(await _mediator.Send(new GetStockItemByIdQuery(id)));
     }
