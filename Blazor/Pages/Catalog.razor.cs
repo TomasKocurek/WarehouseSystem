@@ -6,18 +6,15 @@ namespace Blazor.Pages;
 
 public partial class Catalog : ComponentBase
 {
-    private Task<GridDataProviderResult<ProductDto>> GetGridData(GridDataProviderRequest<ProductDto> request)
+    private async Task<GridDataProviderResult<ProductDto>> GetGridData(GridDataProviderRequest<ProductDto> request)
     {
-        //todo
-        List<ProductDto> data = new()
-        {
-            new() { Id = Guid.NewGuid(), Name = "Test product 1" },
-            new() { Id = Guid.NewGuid(), Name = "Test product 2" }
-        };
-        return Task.FromResult(new GridDataProviderResult<ProductDto>
-        {
-            Data = data,
-            TotalCount = data.Count()
-        });
+        var products = await _productsService.GetAllProductsAsync();
+
+        return request.ApplyTo(products);
+    }
+
+    private void NavigateToNewProduct()
+    {
+        _navManager.NavigateTo("catalog/new");
     }
 }

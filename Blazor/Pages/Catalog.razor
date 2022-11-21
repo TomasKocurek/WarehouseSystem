@@ -1,13 +1,16 @@
 ﻿@page "/catalog"
 @using Shared.Dto
+@inject ProductsService _productsService
+@inject NavigationManager _navManager
 
 <PageTitle>Catalog</PageTitle>
 
+<HxButton Text="Add product" OnClick="@NavigateToNewProduct" Color="ThemeColor.Primary" />
 
 <HxGrid TItem="ProductDto" Responsive="true" DataProvider="GetGridData" PageSize="25">
     <Columns>
-        <HxGridColumn TItem="ProductDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortString="@nameof(ProductDto.Name)" IsDefaultSortColumn="true" />
+        <HxGridColumn TItem="ProductDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn="true" />
         @*TODO proklik na suppliera*@
-        <HxGridColumn TItem="ProductDto" HeaderText="Supplier" ItemTextSelector="@(i => i.Supplier?.Name ?? "")" SortString="@nameof(ProductDto.Supplier)" />
+        <HxGridColumn TItem="ProductDto" HeaderText="Supplier" ItemTextSelector="@(i => i.Supplier?.Name ?? "")"  SortKeySelector="@(i => i.Supplier.Name)"/>
     </Columns>
 </HxGrid>

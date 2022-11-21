@@ -1,0 +1,13 @@
+﻿@page "/catalog/new"
+@inject ProductsService _productsService
+@inject NavigationManager _navigationManager
+
+<PageTitle>New product</PageTitle>
+
+<HxInputText @bind-Value="newProduct.Name" Label="Name" />
+
+@*TODO obecný formulář*@
+
+<div class="btn-div">
+    <HxButton Text="Add product" OnClick="AddProductAsync" Color="ThemeColor.Primary" />
+</div>
