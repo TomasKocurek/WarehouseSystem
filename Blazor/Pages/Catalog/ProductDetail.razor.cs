@@ -1,6 +1,7 @@
 ﻿using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
 using Shared.Dto;
+using System.ComponentModel.DataAnnotations;
 
 namespace Blazor.Pages.Catalog;
 
@@ -15,6 +16,8 @@ public partial class ProductDetail : ComponentBase
     private bool SaveBtnEnabled { get; set; } = true;
     private bool StocksHidden { get; set; } = true;
 
+    private FormModel model = new();
+
     protected override async Task<Task> OnInitializedAsync()
     {
         if (Id != null && Id != "new") await LoadProductAsync();
@@ -25,17 +28,18 @@ public partial class ProductDetail : ComponentBase
     private async Task LoadProductAsync()
     {
         product = await _productsService.GetProductById(Id!);
+        model = new(product.Name);
         SaveBtnEnabled = false;
         StocksHidden = false;
     }
 
     //todo validace
     //todo create vs update
-    private async Task SaveProductAsync()
+    private async Task SaveProduct()
     {
         var command = new
         {
-            product.Name
+            model.Name
         };
 
         await _productsService.CreateNewProduct(command);
@@ -59,5 +63,18 @@ public partial class ProductDetail : ComponentBase
     private void OpenNewStockItem()
     {
         _navigationManager.NavigateTo($"warehouse/{Id}/new");
+    }
+}
+
+internal class FormModel
+{
+    [Required(ErrorMessage = "Enter name")]
+    public string Name { get; set; }
+
+    public FormModel() { }
+
+    public FormModel(string name)
+    {
+        Name = name;
     }
 }

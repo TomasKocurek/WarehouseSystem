@@ -21,7 +21,7 @@ public class GetStockItemByIdQueryHandler : IRequestHandler<GetStockItemByIdQuer
 
     public async Task<StockItemDto?> Handle(GetStockItemByIdQuery request, CancellationToken cancellationToken)
     {
-        var stockItem = await _stockItemRepository.Get(new(request.Id), nameof(StockItem.Product));
+        var stockItem = await _stockItemRepository.Get(new(request.Id), nameof(StockItem.Product), nameof(StockItem.Stock));
         return _mapper.Map<StockItemDto>(stockItem);
     }
 }

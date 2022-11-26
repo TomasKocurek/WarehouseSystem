@@ -32,4 +32,9 @@ public class ProductsService
 
         return await _apiClient.DeserializeResponse<ResultCreated<string>>(response);
     }
+
+    public Task DeleteProduct(string id)
+    {
+        return _apiClient.SendAsync(HttpMethod.Delete, $"products/delete/{id}");
+    }
 }

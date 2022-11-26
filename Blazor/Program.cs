@@ -15,6 +15,7 @@ builder.Services.AddScoped<StocksService>();
 
 // Add havit components
 builder.Services.AddHxServices();
+builder.Services.AddHxMessageBoxHost();
 
 var app = builder.Build();
 

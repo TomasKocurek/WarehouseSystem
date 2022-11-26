@@ -30,11 +30,11 @@ public partial class StockItemDetail : ComponentBase
     private async Task LoadStockItem()
     {
         stockItem = await _stockItemService.GetStockItemById(Id!);
+        model = new(stockItem.Stock.Id.ToString(), stockItem.BarCode, stockItem.Amount);
         ProductId = stockItem.Product!.Id.ToString();
         SaveBtnEnabled = false;
     }
 
-    //todo validace
     //todo create vs update
     private async Task SaveStockItem()
     {
@@ -51,7 +51,7 @@ public partial class StockItemDetail : ComponentBase
 
         if (result != null)
         {
-            _navigationManager.NavigateTo($"warehouse/{result.Id}");
+            _navigationManager.NavigateTo($"warehouse/{result.Id}", true);
         }
     }
 }
@@ -66,4 +66,13 @@ internal class FormModel
 
     [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
     public int Amount { get; set; }
+
+    public FormModel() { }
+
+    public FormModel(string stockId, string barCode, int amount)
+    {
+        StockId = stockId;
+        BarCode = barCode;
+        Amount = amount;
+    }
 }

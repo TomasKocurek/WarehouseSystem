@@ -107,8 +107,7 @@ namespace Infrastructure.Migrations
                         name: "FK_Movements_StockItems_StockItemId",
                         column: x => x.StockItemId,
                         principalTable: "StockItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

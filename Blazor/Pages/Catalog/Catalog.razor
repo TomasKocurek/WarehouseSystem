@@ -14,6 +14,7 @@
         <HxContextMenuGridColumn TItem="ProductDto" Context="item">
             <HxContextMenu>
                 <HxContextMenuItem Text="Open" Icon="BootstrapIcon.TextCenter" OnClick="() => OpenProduct(item)" />
+                <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" OnClick="() => DeleteProduct(item)" />
             </HxContextMenu>
         </HxContextMenuGridColumn>
     </Columns>
