@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Entities;
 using Infrastructure.Repositories.StockItemRepositories;
 using MediatR;
 using Shared.Dto;
@@ -20,7 +21,7 @@ public class GetStockItemByIdQueryHandler : IRequestHandler<GetStockItemByIdQuer
 
     public async Task<StockItemDto?> Handle(GetStockItemByIdQuery request, CancellationToken cancellationToken)
     {
-        var stockItem = await _stockItemRepository.Get(new(request.Id));
+        var stockItem = await _stockItemRepository.Get(new(request.Id), nameof(StockItem.Product));
         return _mapper.Map<StockItemDto>(stockItem);
     }
 }

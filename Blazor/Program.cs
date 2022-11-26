@@ -10,6 +10,8 @@ builder.Services.AddServerSideBlazor();
 // Add services
 builder.Services.AddScoped<ApiClient>();
 builder.Services.AddScoped<ProductsService>();
+builder.Services.AddScoped<StockItemsService>();
+builder.Services.AddScoped<StocksService>();
 
 // Add havit components
 builder.Services.AddHxServices();

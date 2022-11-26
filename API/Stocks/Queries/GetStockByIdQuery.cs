@@ -3,7 +3,7 @@ using Infrastructure.Repositories.StockRepositories;
 using MediatR;
 using Shared.Dto;
 
-namespace API.StockItems.Queries;
+namespace API.Stocks.Queries;
 
 public record class GetStockByIdQuery(string Id) : IRequest<StockDto?>;
 

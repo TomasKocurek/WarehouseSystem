@@ -5,12 +5,16 @@
 
 <PageTitle>Catalog</PageTitle>
 
-<HxButton Text="Add product" OnClick="@NavigateToNewProduct" Color="ThemeColor.Primary" />
+<HxButton Text="Add product" OnClick="@OpenNewProduct" Color="ThemeColor.Primary" />
 
 <HxGrid TItem="ProductDto" Responsive="true" DataProvider="GetGridData" PageSize="25">
     <Columns>
         <HxGridColumn TItem="ProductDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn="true" />
-        @*TODO proklik na suppliera*@
         <HxGridColumn TItem="ProductDto" HeaderText="Supplier" ItemTextSelector="@(i => i.Supplier?.Name ?? "")"  SortKeySelector="@(i => i.Supplier.Name)"/>
+        <HxContextMenuGridColumn TItem="ProductDto" Context="item">
+            <HxContextMenu>
+                <HxContextMenuItem Text="Open" Icon="BootstrapIcon.TextCenter" OnClick="() => OpenProduct(item)" />
+            </HxContextMenu>
+        </HxContextMenuGridColumn>
     </Columns>
 </HxGrid>

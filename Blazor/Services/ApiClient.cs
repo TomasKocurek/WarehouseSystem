@@ -15,11 +15,11 @@ public class ApiClient
         };
     }
 
-    public Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri, HttpContent? content = null)
+    public Task<HttpResponseMessage> SendAsync(HttpMethod method, string uri, object? content = null)
     {
         HttpRequestMessage request = new(method, new Uri(uri, UriKind.Relative));
 
-        if (content is not null) request.Content = content;
+        if (content is not null) request.Content = JsonContent.Create(content);
 
         return _httpClient.SendAsync(request);
     }

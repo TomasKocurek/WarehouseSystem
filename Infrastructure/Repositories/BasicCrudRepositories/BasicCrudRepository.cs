@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Infrastructure.Extensions;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,9 +32,19 @@ public class BasicCrudRepository<T, TKey> : IBasicCrudRepository<T, TKey>
         return _context.Set<T>().FirstOrDefaultAsync(e => e.Id!.Equals(id));
     }
 
+    public Task<T?> Get(TKey id, string[] includes)
+    {
+        return _context.Set<T>().IncludeRange(includes).FirstOrDefaultAsync(e => e.Id!.Equals(id));
+    }
+
     public Task<List<T>> GetAll()
     {
         return _context.Set<T>().ToListAsync();
+    }
+
+    public Task<List<T>> GetAll(string[] includes)
+    {
+        return _context.Set<T>().IncludeRange(includes).ToListAsync();
     }
 
     public Task SaveAsync()
@@ -45,6 +56,4 @@ public class BasicCrudRepository<T, TKey> : IBasicCrudRepository<T, TKey>
     {
         _context.Set<T>().Update(entity);
     }
-
-
 }

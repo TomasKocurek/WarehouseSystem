@@ -31,6 +31,13 @@ public class StockItemsController : ControllerBase
         return Ok(await _mediator.Send(new GetStockItemByIdQuery(id)));
     }
 
+    //todo test
+    [HttpGet("by-product/{id}")]
+    public async Task<ActionResult<List<StockItemDto>>> GetStockItemsByProduct([FromRoute] string id)
+    {
+        return Ok(await _mediator.Send(new GetStockItemsByProductIdQuery(id)));
+    }
+
     [HttpDelete("{id}/delete")]
     public async Task<ActionResult> DeleteStockItemById([FromRoute] string id)
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Shared.Dto;
 
-namespace Blazor.Pages;
+namespace Blazor.Pages.Catalog;
 
 public partial class Catalog : ComponentBase
 {
@@ -13,8 +13,13 @@ public partial class Catalog : ComponentBase
         return request.ApplyTo(products);
     }
 
-    private void NavigateToNewProduct()
+    private void OpenNewProduct()
     {
         _navManager.NavigateTo("catalog/new");
+    }
+
+    private void OpenProduct(ProductDto item)
+    {
+        _navManager.NavigateTo($"catalog/{item.Id}");
     }
 }

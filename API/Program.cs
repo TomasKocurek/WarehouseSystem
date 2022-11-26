@@ -1,4 +1,4 @@
-using Infrastructure;
+using Infrastructure.Extensions;
 using MediatR;
 using Shared.Mapping;
 using System.Reflection;
@@ -12,6 +12,7 @@ builder.Services
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

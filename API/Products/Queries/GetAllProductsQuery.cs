@@ -17,7 +17,7 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, L
 
     public GetAllProductsQueryHandler(IProductRepository productRepository, IMapper mapper)
     {
-        this._productRepository = productRepository;
+        _productRepository = productRepository;
         _mapper = mapper;
     }
 

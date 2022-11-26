@@ -1,0 +1,29 @@
+﻿@page "/warehouse/{productId}/new"
+@page "/warehouse/{id}"
+@using Shared.Dto
+@inject StockItemsService _stockItemService
+@inject NavigationManager _navigationManager
+@inject StocksService _stocksService
+
+<PageTitle>Stock item</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="SaveStockItem">
+    <DataAnnotationsValidator/>
+
+    <HxInputText @bind-Value="@model.BarCode" Label="Barcode"/>
+    <HxInputNumber @bind-Value="@model.Amount" Label="Amount"/>
+
+    <HxSelect TItem="StockDto" 
+              TValue="string" 
+              Label="Stock" 
+              Data="@stocks" 
+              @bind-Value="@model.StockId"
+              TextSelector="@(s => s.Name)"
+              ValueSelector="@(s => s.Id.ToString())"
+              Nullable="true"
+              NullText="Select stock"
+              NullDataText="Loading stocks..."
+              />
+
+    <HxSubmit CssClass="btn-margin" Enabled="@SaveBtnEnabled" Text="Save" Color="ThemeColor.Primary" />
+</EditForm>
