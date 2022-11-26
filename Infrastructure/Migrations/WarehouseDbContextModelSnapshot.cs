@@ -128,7 +128,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.StockItem", "StockItem")
                         .WithMany("Movements")
                         .HasForeignKey("StockItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("StockItem");

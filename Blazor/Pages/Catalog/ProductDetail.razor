@@ -1,0 +1,30 @@
+﻿@page "/catalog/new"
+@page "/catalog/{id}"
+@using Shared.Dto
+@inject ProductsService _productsService
+@inject StockItemsService _stockItemService
+@inject NavigationManager _navigationManager
+
+<PageTitle>Product</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="SaveProduct">
+    <DataAnnotationsValidator />
+
+    <HxInputText @bind-Value="model.Name" Label="Name" />
+
+    <HxSubmit CssClass="btn-margin" Enabled="@SaveBtnEnabled" Text="Save product"  Color="ThemeColor.Primary" />
+
+</EditForm>
+
+<div hidden="@StocksHidden">
+    <h5>Product Stock items</h5>
+
+    <HxGrid TItem="StockItemDto" Responsive="true" DataProvider="GetGridData" PageSize="25">
+        <Columns>
+            <HxGridColumn TItem="StockItemDto" HeaderText="Barcode" ItemTextSelector="@(i => i.BarCode)" SortKeySelector="@(i => i.BarCode)" IsDefaultSortColumn="true" />
+            <HxGridColumn TItem="StockItemDto" HeaderText="Amount" ItemTextSelector="@(i => i.Amount.ToString())" SortKeySelector="@(i => i.Amount)" />
+        </Columns>
+    </HxGrid>
+
+    <HxButton CssClass="btn-margin" Text="Add stock item" OnClick="OpenNewStockItem" Color="ThemeColor.Primary"/>
+</div>

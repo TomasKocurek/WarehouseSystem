@@ -6,6 +6,8 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
+//todo use test key
 public class TestsController
 {
     private readonly WarehouseDbContext _context;

@@ -1,10 +1,10 @@
 ﻿using API.StockItems.Queries;
 using API.Stocks.Commands;
 using API.Stocks.Queries;
-using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Shared;
+using Shared.Dto;
 
 namespace API.Controllers;
 
@@ -26,13 +26,13 @@ public class StocksController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<StockItem?>> GetStockById([FromRoute] string id)
+    public async Task<ActionResult<StockDto?>> GetStockById([FromRoute] string id)
     {
         return Ok(await _mediator.Send(new GetStockByIdQuery(id)));
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult<List<StockItem>>> GetAllStocks()
+    public async Task<ActionResult<List<StockDto>>> GetAllStocks()
     {
         return Ok(await _mediator.Send(new GetAllStocksQuery()));
     }

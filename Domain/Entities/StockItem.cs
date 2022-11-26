@@ -9,7 +9,7 @@ public class StockItem : Entity<Guid>
     public Product? Product { get; set; }
     public Guid ProductId { get; set; }
     public List<Movement> Movements { get; set; } = new();
-    public Stock? Stock { get; set; }
+    public Stock Stock { get; set; }
     public Guid StockId { get; set; }
 
     public StockItem() { }
