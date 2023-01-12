@@ -27,8 +27,7 @@ builder.Services.AddAutoMapper(
     typeof(MovementProfile),
     typeof(ProductProfile),
     typeof(StockItemProfile),
-    typeof(StockProfile),
-    typeof(SupplierProfile));
+    typeof(StockProfile));
 
 var app = builder.Build();
 
