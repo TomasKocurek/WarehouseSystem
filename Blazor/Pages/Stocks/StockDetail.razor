@@ -1,0 +1,15 @@
+﻿@page "/stocks/new"
+@inject NavigationManager _navManager;
+@inject StocksService _stocksService;
+
+<PageTitle>Stock</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="SaveStock">
+    <DataAnnotationsValidator/>
+
+    <HxInputText @bind-Value="model.Name" Label="Name"/>
+    <HxInputText @bind-Value="model.Description" Label="Description"/>
+
+    <HxSubmit CssClass="btn-margin" Text="Save stock" Color="ThemeColor.Primary"/> 
+
+</EditForm>

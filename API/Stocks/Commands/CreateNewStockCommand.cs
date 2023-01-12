@@ -8,7 +8,7 @@ namespace API.Stocks.Commands;
 public class CreateNewStockCommand : IRequest<ResultCreated<string>>
 {
     public string Name { get; set; }
-    public string? Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 }
 
 public class CreateNewStockCommandHandler : IRequestHandler<CreateNewStockCommand, ResultCreated<string>>
@@ -22,7 +22,7 @@ public class CreateNewStockCommandHandler : IRequestHandler<CreateNewStockComman
 
     public async Task<ResultCreated<string>> Handle(CreateNewStockCommand request, CancellationToken cancellationToken)
     {
-        Stock stock = new(request.Name, request.Description ?? string.Empty);
+        Stock stock = new(request.Name, request.Description);
         _stockRepository.Add(stock);
         await _stockRepository.SaveAsync();
 

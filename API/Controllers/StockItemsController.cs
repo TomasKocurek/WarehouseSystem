@@ -11,7 +11,6 @@ namespace API.Controllers;
 [ApiController]
 public class StockItemsController : ControllerBase
 {
-    //todo dto
     private readonly IMediator _mediator;
 
     public StockItemsController(IMediator mediator)
