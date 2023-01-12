@@ -1,5 +1,4 @@
-﻿using API.StockItems.Queries;
-using API.Stocks.Commands;
+﻿using API.Stocks.Commands;
 using API.Stocks.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +18,7 @@ public class StocksController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<ActionResult<ResultCreated<string>>> CreateNewStock([FromBody] CreateNewStockCommand command)
     {
         return Ok(await _mediator.Send(command));
@@ -31,13 +30,13 @@ public class StocksController : ControllerBase
         return Ok(await _mediator.Send(new GetStockByIdQuery(id)));
     }
 
-    [HttpGet("all")]
+    [HttpGet]
     public async Task<ActionResult<List<StockDto>>> GetAllStocks()
     {
         return Ok(await _mediator.Send(new GetAllStocksQuery()));
     }
 
-    [HttpDelete("delete/{id}")]
+    [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteStockById([FromRoute] string id)
     {
         return Ok(await _mediator.Send(new DeleteStockByIdCommand(id)));

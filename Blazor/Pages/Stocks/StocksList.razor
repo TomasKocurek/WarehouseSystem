@@ -1,0 +1,20 @@
+﻿@page "/stocks"
+@using Shared.Dto;
+@inject NavigationManager _navManager
+@inject StocksService _stocksService
+
+<PageTitle>Stocks</PageTitle>
+
+<HxButton Text="Add stock" OnClick="@OpenNewStock" Color="ThemeColor.Primary" />
+
+<HxGrid TItem="StockDto" Responsive="true" DataProvider="GetGridData" PageSize="25">
+    <Columns>
+        <HxGridColumn TItem="StockDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn="true"/>
+        <HxGridColumn TItem="StockDto" HeaderText="Description" ItemTextSelector="@(i => i.Description)" SortKeySelector="@(i => i.Description)"/>
+        <HxContextMenuGridColumn TItem="StockDto" Context="item">
+            <HxContextMenu>
+                <HxContextMenuItem Text="Delete" Icon="BootstrapIcon.Trash" OnClick="() => DeleteStock(item)" />
+            </HxContextMenu>
+        </HxContextMenuGridColumn>
+    </Columns>
+</HxGrid>
