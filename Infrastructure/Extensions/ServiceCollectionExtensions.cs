@@ -3,7 +3,6 @@ using Infrastructure.Repositories.MovementRepositories;
 using Infrastructure.Repositories.ProductRepositories;
 using Infrastructure.Repositories.StockItemRepositories;
 using Infrastructure.Repositories.StockRepositories;
-using Infrastructure.Repositories.SupplierRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +24,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IStockItemRepository, StockItemRepository>();
         services.AddScoped<IMovementRepository, MovementRepository>();
-        services.AddScoped<ISupplierRepository, SupplierRepository>();
         services.AddScoped<IStockRepository, StockRepository>();
 
         return services;
