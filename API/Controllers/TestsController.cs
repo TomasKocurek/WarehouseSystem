@@ -23,7 +23,6 @@ public class TestsController
         await _context.DeleteRangeAsync<Movement>();
         await _context.DeleteRangeAsync<StockItem>();
         await _context.DeleteRangeAsync<Stock>();
-        await _context.DeleteRangeAsync<Supplier>();
         await _context.DeleteRangeAsync<Product>();
 
         await _context.SaveChangesAsync();
