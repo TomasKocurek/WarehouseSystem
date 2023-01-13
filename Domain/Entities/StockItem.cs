@@ -30,4 +30,12 @@ public class StockItem : Entity<Guid>
         if (type == MovementType.Receipt) Amount += amount;
         else if (type == MovementType.Issue) Amount -= amount;
     }
+
+    public static StockItem ReceiptItem(string barCode, int amount, string productId, string stockId)
+    {
+        StockItem item = new(barCode, amount, productId, stockId);
+        item.AddMovement(amount, MovementType.Receipt);
+
+        return item;
+    }
 }

@@ -54,25 +54,25 @@ public partial class StockItemDetail : ComponentBase
             _navigationManager.NavigateTo($"warehouse/{result.Id}", true);
         }
     }
-}
 
-internal class FormModel
-{
-    [Required(ErrorMessage = "Choose stock")]
-    public string StockId { get; set; }
-
-    [Required(ErrorMessage = "Enter barcode")]
-    public string BarCode { get; set; }
-
-    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
-    public int Amount { get; set; }
-
-    public FormModel() { }
-
-    public FormModel(string stockId, string barCode, int amount)
+    internal class FormModel
     {
-        StockId = stockId;
-        BarCode = barCode;
-        Amount = amount;
+        [Required(ErrorMessage = "Choose stock")]
+        public string StockId { get; set; }
+
+        [Required(ErrorMessage = "Enter barcode")]
+        public string BarCode { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+        public int Amount { get; set; }
+
+        public FormModel() { }
+
+        public FormModel(string stockId, string barCode, int amount)
+        {
+            StockId = stockId;
+            BarCode = barCode;
+            Amount = amount;
+        }
     }
 }

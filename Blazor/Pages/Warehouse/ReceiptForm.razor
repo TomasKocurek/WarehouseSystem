@@ -1,0 +1,12 @@
+﻿@page "/warehouse/receipt"
+@using Shared.Dto
+@inject NavigationManager _navigationManager
+@inject StocksService _stocksService
+
+<PageTitle>Receipt to warehouse</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="ReceiptItems">
+    <DataAnnotationsValidator/>
+
+    <HxInputText @bind-Value="model.Invoice" Label="Invoice"/>
+</EditForm>
