@@ -34,4 +34,9 @@ public class ProductsService : BaseService
     {
         return _client.SendAsync(HttpMethod.Delete, $"{_path}/delete/{id}");
     }
+
+    public Task GetProductByName(string name)
+    {
+        return _client.SendAsync(HttpMethod.Get, $"{_path}/by-name/{name}");
+    }
 }

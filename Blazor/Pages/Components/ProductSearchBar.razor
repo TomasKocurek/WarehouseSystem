@@ -1,0 +1,15 @@
+﻿@inject ProductsService _productsService
+
+<HxSearchBox DataProvider="ProvideSearchResults"
+             TItem="SearchProduct"
+             ItemTitleSelector="i => i.Name"
+             ItemSubtitleSelector="i => i.Id"
+             Placeholder="@Placeholder"
+             OnItemSelected="OnItemSelected">
+    <DefaultContentTemplate>
+        <div class="p-2 text-muted">Search for products in catalog ...</div>
+    </DefaultContentTemplate>
+    <NotFoundTemplate>
+        <div class="small py-2 px-3 text-muted"><HxIcon CssClass="me-2" Icon="BootstrapIcon.EmojiFrown"/>Sorry, I did not find that...</div>
+    </NotFoundTemplate>
+</HxSearchBox>

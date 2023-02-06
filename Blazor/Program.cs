@@ -12,6 +12,7 @@ builder.Services.AddScoped<ApiClient>();
 builder.Services.AddScoped<ProductsService>();
 builder.Services.AddScoped<StockItemsService>();
 builder.Services.AddScoped<StocksService>();
+builder.Services.AddScoped<MovementsService>();
 
 // Add havit components
 builder.Services.AddHxServices();

@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public class StockItem : Entity<Guid>
 {
-    public string BarCode { get; set; }
+    public string? BarCode { get; set; }
     public int Amount { get; set; }
     public Product? Product { get; set; }
     public Guid ProductId { get; set; }
@@ -33,7 +33,7 @@ public class StockItem : Entity<Guid>
 
     public static StockItem ReceiptItem(string barCode, int amount, string productId, string stockId)
     {
-        StockItem item = new(barCode, amount, productId, stockId);
+        StockItem item = new(barCode, 0, productId, stockId);
         item.AddMovement(amount, MovementType.Receipt);
 
         return item;

@@ -14,7 +14,7 @@ public class MovementsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("receipt")]
+    [HttpPost("receipt")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Receipt([FromBody] ReceiptCommand command)
