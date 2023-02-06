@@ -48,4 +48,10 @@ public class ProductsController : ControllerBase
     {
         return Ok(await _mediator.Send(new DeleteProductCommand(id)));
     }
+
+    [HttpGet("by-name/{name}")]
+    public async Task<ActionResult<ProductDto>> GetProductByName([FromRoute] string name)
+    {
+        return Ok(await _mediator.Send(new GetProductByNameQuery(name)));
+    }
 }

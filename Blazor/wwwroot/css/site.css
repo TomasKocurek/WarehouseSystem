@@ -67,3 +67,12 @@ a, .btn-link {
 .btn-margin {
     margin: 15px 0px;
 }
+
+.flex-container {
+    display: inline-flex;
+}
+
+.flex1 {
+    flex: 1; 
+    margin: 0 15px 0 0;
+}

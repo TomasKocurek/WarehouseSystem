@@ -7,12 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="SharedComponents\ProductSearchBar.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Havit.Blazor.Components.Web.Bootstrap" Version="3.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="SharedComponents\ProductSearchBar.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="SharedComponents\ProductSearchBar.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Pages\Components\ProductSearchBar.razor" />
 	</ItemGroup>
 
 </Project>

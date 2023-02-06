@@ -1,0 +1,84 @@
+﻿@page "/warehouse/receipt"
+@using Blazor.Pages.Components
+@using Shared.Dto
+@inject NavigationManager _navigationManager
+@inject StocksService _stocksService
+@inject MovementsService _movementsService
+
+<PageTitle>Receipt to warehouse</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="ReceiptItems">
+    <DataAnnotationsValidator/>
+
+    <div class="flex-container">
+        <div class="flex1">
+            @*Invoice number*@
+            <HxInputText @bind-Value="model.Invoice" Label="Invoice" />
+        </div>
+        <div class="flex1">
+            @*Ínvoice date*@
+            <HxInputDate @bind-Value="model.Date" Label="Invoice date" MaxDate="@DateTime.Today" />
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div class="flex1">
+            @*Stock*@
+            <HxSelect 
+                TItem="StockDto" 
+                TValue="string" 
+                Label="Stock"
+                Data="@Stocks"
+                @bind-Value="@model.StockId"
+                TextSelector="@(i => i.Name)"
+                ValueSelector="@(i => i.Id.ToString())"
+                Nullable="true"
+                NullText="Select stock"
+                NullDataText="Loading stocks"/>
+        </div>
+        <div class="flex1"></div>
+    </div>
+
+    
+    @*Add new item to receipt*@
+    <div class="flex-container">
+        <div class="flex1">
+            <ProductSearchBar @ref="ProductSearchBar"/>
+        </div>
+        <div class="flex1">
+            <HxButton Text="Receipt next" OnClick="@ReceiptNext" Color="ThemeColor.Primary" />
+        </div>
+    </div>
+
+    @*Grid with items to receipt*@
+    <HxGrid
+        TItem="ReceiptItem"
+        SelectedDataItem="selectedItem"
+        SelectedDataItemChanged="HandleChange"
+        DataProvider="GetGridData" 
+        Responsive="true" 
+        PageSize="25"
+        @ref="grid">
+        <Columns>
+            <HxGridColumn HeaderText="Product name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn=true/>
+
+            <HxGridColumn HeaderText="Amount" SortKeySelector="@(i => i.Amount)">
+                <ItemTemplate Context="item">
+                    @if (selectedItem == item)
+                    {
+                        <HxInputNumber @bind-Value="item.Amount" />
+                    }
+                    else
+                    {
+                        <div>@item?.Amount</div>
+                    }
+                </ItemTemplate>
+            </HxGridColumn>
+
+            <HxGridColumn HeaderText="Id" ItemTextSelector="@(i => i.ProductId)" SortKeySelector="@(i => i.ProductId)"/>
+        </Columns>
+    </HxGrid>
+    
+    <HxSubmit CssClass="btn-margin" Text="Save" Color="ThemeColor.Primary" />
+
+</EditForm>
