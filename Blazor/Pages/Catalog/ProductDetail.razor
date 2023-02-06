@@ -10,7 +10,15 @@
 <EditForm Model="model" OnValidSubmit="SaveProduct">
     <DataAnnotationsValidator />
 
-    <HxInputText @bind-Value="model.Name" Label="Name" />
+    <div class="flex-container">
+        <div class="flex1">
+            <HxInputText @bind-Value="model.Name" Label="Name" />
+        </div>
+        <div class="flex1">
+            <HxInputNumber @bind-Value="model.SpaceRequirements" Label="Space Requirements"/>
+        </div>
+    </div>
+
 
     <HxSubmit CssClass="btn-margin" Enabled="@SaveBtnEnabled" Text="Save product"  Color="ThemeColor.Primary" />
 

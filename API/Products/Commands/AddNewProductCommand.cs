@@ -8,6 +8,7 @@ namespace API.Products.Commands;
 public class AddNewProductCommand : IRequest<ResultCreated<string>>
 {
     public string Name { get; set; }
+    public decimal SpaceRequirements { get; set; }
 }
 
 public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand, ResultCreated<string>>
@@ -22,7 +23,7 @@ public class AddNewProductCommandHandler : IRequestHandler<AddNewProductCommand,
     //todo validation
     public async Task<ResultCreated<string>> Handle(AddNewProductCommand request, CancellationToken cancellationToken)
     {
-        Product product = new(request.Name);
+        Product product = new(request.Name, request.SpaceRequirements);
 
         _productRepository.Add(product);
         await _productRepository.SaveAsync();
