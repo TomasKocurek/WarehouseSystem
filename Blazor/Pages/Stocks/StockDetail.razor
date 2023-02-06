@@ -7,8 +7,21 @@
 <EditForm Model="model" OnValidSubmit="SaveStock">
     <DataAnnotationsValidator/>
 
-    <HxInputText @bind-Value="model.Name" Label="Name"/>
-    <HxInputText @bind-Value="model.Description" Label="Description"/>
+
+    <div class="flex-container">
+        <div class="flex1">
+            <HxInputText @bind-Value="model.Name" Label="Name"/>
+        </div>
+        <div class="flex1">
+            <HxInputText @bind-Value="model.Description" Label="Description"/>
+        </div>
+    </div>
+
+    <div class="flex-container">
+        <div class="flex1">
+            <HxInputNumber @bind-Value="model.Capacity" Label="Capacity"/>
+        </div>
+    </div>
 
     <HxSubmit CssClass="btn-margin" Text="Save stock" Color="ThemeColor.Primary"/> 
 

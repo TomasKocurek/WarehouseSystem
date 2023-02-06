@@ -12,7 +12,8 @@ public partial class StockDetail : ComponentBase
         var command = new
         {
             model.Name,
-            model.Description
+            model.Description,
+            model.Capacity
         };
 
         await _stocksService.CreateNewStock(command);
@@ -30,6 +31,8 @@ internal class FormModel
     [Required(ErrorMessage = "Enter name")]
     public string Name { get; set; }
     public string Description { get; set; } = string.Empty;
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public decimal Capacity { get; set; }
 
     public FormModel()
     {

@@ -39,7 +39,8 @@ public partial class ProductDetail : ComponentBase
     {
         var command = new
         {
-            model.Name
+            model.Name,
+            model.SpaceRequirements
         };
 
         await _productsService.CreateNewProduct(command);
@@ -70,6 +71,8 @@ internal class FormModel
 {
     [Required(ErrorMessage = "Enter name")]
     public string Name { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public decimal SpaceRequirements { get; set; }
 
     public FormModel() { }
 
