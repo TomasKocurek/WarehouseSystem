@@ -18,7 +18,7 @@ public class ReceiptCommandHandler : IRequestHandler<ReceiptCommand>
     {
         foreach (var item in request.ReceiptItems)
         {
-            StockItem stockItem = StockItem.ReceiptItem(item.BarCode, item.Amount, item.ProductId, request.StockId);
+            StockItem stockItem = StockItem.ReceiptItem(item.BarCode, item.Amount, item.ProductId, item?.StockId ?? request.StockId);
             _stockItemRepository.Add(stockItem);
         }
 

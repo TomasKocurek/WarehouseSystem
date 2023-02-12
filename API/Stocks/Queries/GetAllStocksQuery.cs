@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Domain.Entities;
 using Infrastructure.Repositories.StockRepositories;
 using MediatR;
 using Shared.Dto;
@@ -20,7 +21,7 @@ public class GetAllStocksQueryHandler : IRequestHandler<GetAllStocksQuery, List<
 
     public async Task<List<StockDto>> Handle(GetAllStocksQuery request, CancellationToken cancellationToken)
     {
-        var stocks = await _stockRepository.GetAll();
+        var stocks = await _stockRepository.GetAll($"{nameof(Stock.StockItems)}.{nameof(StockItem.Product)}");
         return _mapper.Map<List<StockDto>>(stocks);
     }
 }

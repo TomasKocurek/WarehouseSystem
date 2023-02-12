@@ -41,4 +41,11 @@ public class StocksController : ControllerBase
     {
         return Ok(await _mediator.Send(new DeleteStockByIdCommand(id)));
     }
+
+    [HttpGet("suggest-stock")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<StockDto?>> SuggestStock([FromBody] SuggestStockQuery query)
+    {
+        return Ok(await _mediator.Send(query));
+    }
 }
