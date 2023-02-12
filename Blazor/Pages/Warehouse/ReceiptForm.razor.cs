@@ -44,6 +44,23 @@ public partial class ReceiptForm : ComponentBase
         selectedItem = newReceiptItem;
     }
 
+    private async Task SuggestStock(ReceiptItem item)
+    {
+        var command = new
+        {
+            item.ProductId,
+            item.Amount
+        };
+
+        var stock = await _stocksService.SuggestStock(command);
+
+        if (stock != null)
+        {
+            item.ReceiptStock = new(stock.Id.ToString(), stock.Name);
+            await grid!.RefreshDataAsync();
+        }
+    }
+
     private void ReceiptNext()
     {
         if (ProductSearchBar?.selectedProduct != null)
@@ -77,4 +94,17 @@ internal class ReceiptItem
     public string ProductId { get; set; }
     public string Name { get; set; }
     public int Amount { get; set; }
+    public ReceiptStock? ReceiptStock { get; set; }
+}
+
+internal class ReceiptStock
+{
+    public string StockId { get; set; }
+    public string Name { get; set; }
+
+    public ReceiptStock(string stockId, string name)
+    {
+        StockId = stockId;
+        Name = name;
+    }
 }

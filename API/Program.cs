@@ -1,3 +1,4 @@
+using API.Services;
 using Infrastructure.Extensions;
 using MediatR;
 using Shared.Mapping;
@@ -22,12 +23,13 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
 //add automapper
-//todo
 builder.Services.AddAutoMapper(
     typeof(MovementProfile),
     typeof(ProductProfile),
     typeof(StockItemProfile),
     typeof(StockProfile));
+
+builder.Services.AddScoped<StockSuggestionService>();
 
 var app = builder.Build();
 

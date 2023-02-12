@@ -25,4 +25,10 @@ public class StocksService : BaseService
     {
         return _client.SendAsync(HttpMethod.Delete, $"{_path}/{id}");
     }
+
+    public async Task<StockDto?> SuggestStock(object command)
+    {
+        var result = await _client.SendAsync(HttpMethod.Get, $"{_path}/suggest-stock", command);
+        return await _client.DeserializeResponse<StockDto?>(result);
+    }
 }

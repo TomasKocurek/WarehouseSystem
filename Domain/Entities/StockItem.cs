@@ -12,6 +12,8 @@ public class StockItem : Entity<Guid>
     public Stock Stock { get; set; }
     public Guid StockId { get; set; }
 
+    public decimal SpaceRequirements => (Product?.SpaceRequirements ?? 0) * Amount;
+
     public StockItem() { }
 
     public StockItem(string barCode, int amount, string productId, string stockId)
