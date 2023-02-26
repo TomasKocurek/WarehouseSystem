@@ -48,4 +48,11 @@ public class StocksController : ControllerBase
     {
         return Ok(await _mediator.Send(query));
     }
+
+    [HttpGet("map")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<StocksMapDto>> GetStockMap()
+    {
+        return Ok(await _mediator.Send(new GetStockMapQuery()));
+    }
 }

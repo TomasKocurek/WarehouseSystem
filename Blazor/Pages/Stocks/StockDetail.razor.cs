@@ -13,7 +13,12 @@ public partial class StockDetail : ComponentBase
         {
             model.Name,
             model.Description,
-            model.Capacity
+            model.Capacity,
+            Position = new
+            {
+                X = model.PositionX,
+                Y = model.PositionY,
+            }
         };
 
         await _stocksService.CreateNewStock(command);
@@ -33,6 +38,10 @@ internal class FormModel
     public string Description { get; set; } = string.Empty;
     [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
     public decimal Capacity { get; set; }
+    [Required(ErrorMessage = "Enter X position")]
+    public int PositionX { get; set; }
+    [Required(ErrorMessage = "Enter Y position")]
+    public int PositionY { get; set; }
 
     public FormModel()
     {

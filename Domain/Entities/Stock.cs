@@ -6,6 +6,7 @@ public class Stock : Entity<Guid>
     public string Description { get; set; } = string.Empty;
     public decimal Capacity { get; set; }
     public List<StockItem> StockItems { get; set; } = new();
+    public Position Position { get; set; }
 
     public decimal FreeCapacity => Capacity - StockItems.Sum(i => i.SpaceRequirements);
     public decimal CapacityPercentage => 100 - (100 * FreeCapacity / Capacity);
