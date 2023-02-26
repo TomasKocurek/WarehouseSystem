@@ -76,3 +76,8 @@ a, .btn-link {
     flex: 1; 
     margin: 0 15px 0 0;
 }
+
+.flex2 {
+    flex: 2;
+    margin: 0 15px 0 0;
+}

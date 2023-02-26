@@ -1,0 +1,25 @@
+@startuml
+
+title Algoritmus pro výběr vhodného stocku
+
+(*) --> "Načtení všech Stocků"
+
+--> Odstranění stocků, kde není dostatek místa
+
+if "Existují vhodné stocky" then
+--> [ano] "Filtr stocků kde se již produkt nachází"
+    if "Existují vhodné stocky" then
+        --> [ano] "Hledání jednoproduktového stocku"
+            if "Existuje jednodruhový stock"
+                --> [ano] "Vrátím jednodruhový stock"
+            else
+                -right-> [ne] "Vracím první vhodný stock z předchozího kroku"
+            endif
+    else
+        --> [ne] "Vracím první vhodný stock z předchozího kroku"
+    endif
+else
+--> [ne] "return null (neexistuje vhodný stock)"
+endif
+
+@enduml

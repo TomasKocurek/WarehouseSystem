@@ -31,4 +31,10 @@ public class StocksService : BaseService
         var result = await _client.SendAsync(HttpMethod.Get, $"{_path}/suggest-stock", command);
         return await _client.DeserializeResponse<StockDto?>(result);
     }
+
+    public async Task<StocksMapDto> GetStocksMap()
+    {
+        var result = await _client.SendAsync(HttpMethod.Get, $"{_path}/map");
+        return await _client.DeserializeResponse<StocksMapDto?>(result);
+    }
 }

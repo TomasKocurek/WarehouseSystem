@@ -10,6 +10,7 @@ public class CreateNewStockCommand : IRequest<ResultCreated<string>>
     public string Name { get; set; }
     public string Description { get; set; } = string.Empty;
     public decimal Capacity { get; set; }
+    public Position? Position { get; set; }
 }
 
 public class CreateNewStockCommandHandler : IRequestHandler<CreateNewStockCommand, ResultCreated<string>>
@@ -24,6 +25,7 @@ public class CreateNewStockCommandHandler : IRequestHandler<CreateNewStockComman
     public async Task<ResultCreated<string>> Handle(CreateNewStockCommand request, CancellationToken cancellationToken)
     {
         Stock stock = new(request.Name, request.Description, request.Capacity);
+        stock.Position = request.Position;
         _stockRepository.Add(stock);
         await _stockRepository.SaveAsync();
 

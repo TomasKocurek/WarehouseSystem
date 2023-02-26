@@ -1,0 +1,20 @@
+﻿@inject StocksService _stockService;
+
+<div class="main">
+    <div class="flex-column">
+        <h4>Warehouse map</h4>
+        <div class="map-container">
+            @for (int row = 0; row <= rowsCount; row++)
+            {
+                <div class="map-row">
+                    @for (int column = 0; column <= columnsCount; column++)
+                    {
+                        <div class="map-cell">
+                            @GetStockInfo(row, column)
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
