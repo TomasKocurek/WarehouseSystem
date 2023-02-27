@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Domain.Entities;
-using Infrastructure.Repositories.ProductRepositories;
+using Infrastructure.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Shared.Dto;
 
 namespace API.StockItems.Queries;
@@ -10,19 +10,23 @@ public record class GetStockItemsByProductIdQuery(string Id) : IRequest<List<Sto
 
 public class GetStockItemsByProductIdQueryHandler : IRequestHandler<GetStockItemsByProductIdQuery, List<StockItemDto>>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly WarehouseDbContext _context;
     private readonly IMapper _mapper;
 
-    public GetStockItemsByProductIdQueryHandler(IProductRepository productRepository, IMapper mapper)
+    public GetStockItemsByProductIdQueryHandler(WarehouseDbContext context, IMapper mapper)
     {
-        _productRepository = productRepository;
+        _context = context;
         _mapper = mapper;
     }
 
     //todo validace
     public async Task<List<StockItemDto>> Handle(GetStockItemsByProductIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.Get(new(request.Id), nameof(Product.StockItems));
-        return _mapper.Map<List<StockItemDto>>(product.StockItems);
+        var stockItems = (await _context.Products
+            .Include(p => p.StockItems).ThenInclude(i => i.Stock)
+            .FirstOrDefaultAsync(p => p.Id.ToString() == request.Id))?
+            .StockItems;
+
+        return _mapper.Map<List<StockItemDto>>(stockItems);
     }
 }

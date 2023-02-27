@@ -30,8 +30,8 @@
 	transition: all 0.2s ease-in-out;
 }
 
-.map-cell:hover {
+/*.map-cell:hover {
 	flex: 2;
 	height: 70px;
 	width: 70px;
-}
+}*/

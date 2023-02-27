@@ -1,4 +1,5 @@
-﻿using Havit.Blazor.Components.Web.Bootstrap;
+﻿using Domain.Entities;
+using Havit.Blazor.Components.Web.Bootstrap;
 using Microsoft.AspNetCore.Components;
 using Shared.Dto;
 using System.ComponentModel.DataAnnotations;
@@ -28,7 +29,11 @@ public partial class ProductDetail : ComponentBase
     private async Task LoadProductAsync()
     {
         product = await _productsService.GetProductById(Id!);
-        model = new(product.Name);
+        model = new(product.Name)
+        {
+            SpaceRequirements = product.SpaceRequirements,
+            Price = product.Price.Amount
+        };
         SaveBtnEnabled = false;
         StocksHidden = false;
     }
@@ -40,7 +45,8 @@ public partial class ProductDetail : ComponentBase
         var command = new
         {
             model.Name,
-            model.SpaceRequirements
+            model.SpaceRequirements,
+            Price = new Money(model.Price)
         };
 
         await _productsService.CreateNewProduct(command);
@@ -73,6 +79,8 @@ internal class FormModel
     public string Name { get; set; }
     [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
     public decimal SpaceRequirements { get; set; }
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public decimal Price { get; set; }
 
     public FormModel() { }
 
