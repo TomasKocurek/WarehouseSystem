@@ -20,8 +20,11 @@ public class StockSuggestionService
         var stocks = await _stockRepository.GetAll($"{nameof(Stock.StockItems)}.{nameof(StockItem.Product)}");
         var product = await _productRepositry.Get(new Guid(productId));
 
+        //filturu podle polohy a ABC ratingu
+        var filteredStocks = stocks.Where(s => s.AccessRating >= ((int)product.ABCRating));
+
         //filtruju pokud se itemy vlezou
-        var filteredStocks = stocks
+        filteredStocks = filteredStocks
             .Where(s => s.FreeCapacity >= amount * product?.SpaceRequirements);
 
         if (!filteredStocks.Any()) return null;
