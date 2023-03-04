@@ -8,6 +8,7 @@ public class Movement : Entity<Guid>
     public MovementType Type { get; set; }
     public StockItem StockItem { get; set; }
     public Guid StockItemId { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
 
     public Movement() { }
 

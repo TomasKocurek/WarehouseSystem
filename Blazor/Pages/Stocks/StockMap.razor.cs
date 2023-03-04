@@ -8,7 +8,7 @@ public partial class StockMap : ComponentBase
     private int rowsCount = 10;
     private int columnsCount = 10;
 
-    private string[,] stocksArray = new string[10, 10];
+    private Cell[,] stocksArray = new Cell[10, 10];
 
     protected override async Task<Task> OnInitializedAsync()
     {
@@ -26,7 +26,7 @@ public partial class StockMap : ComponentBase
         foreach (var row in map.Rows)
         {
             int x = 0;
-            foreach (var col in row.Columns)
+            foreach (var col in row.Cells)
             {
                 if (col != null)
                 {
@@ -43,7 +43,7 @@ public partial class StockMap : ComponentBase
     {
         if (row < stocksArray.GetLength(0) && column < stocksArray.GetLength(1))
         {
-            return stocksArray[row, column];
+            return stocksArray[row, column]?.Name ?? "";
         }
         else
         {

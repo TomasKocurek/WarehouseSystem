@@ -11,6 +11,7 @@
     <Columns>
         <HxGridColumn TItem="StockDto" HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn="true"/>
         <HxGridColumn TItem="StockDto" HeaderText="Description" ItemTextSelector="@(i => i.Description)" SortKeySelector="@(i => i.Description)"/>
+        <HxGridColumn HeaderText="Capacity" ItemTextSelector="@(i => i.Capacity.ToString())" SortKeySelector="@(i => i.Capacity)"/>
         <HxGridColumn HeaderText="Fillage" ItemTextSelector="@(i => Math.Round(i.CapacityPercentage).ToString() + " %")" SortKeySelector="@(i => i.CapacityPercentage)"/>
         <HxContextMenuGridColumn TItem="StockDto" Context="item">
             <HxContextMenu>

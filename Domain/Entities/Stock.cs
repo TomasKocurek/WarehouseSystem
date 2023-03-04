@@ -9,7 +9,14 @@ public class Stock : Entity<Guid>
     public Position Position { get; set; }
 
     public decimal FreeCapacity => Capacity - StockItems.Sum(i => i.SpaceRequirements);
+    /// <summary>
+    /// Fillage of stock (%)
+    /// </summary>
     public decimal CapacityPercentage => 100 - (100 * FreeCapacity / Capacity);
+    /// <summary>
+    /// How easily accessible stock is in warehouse
+    /// </summary>
+    public int AccessRating => Position.Y;
 
     public Stock() { }
 

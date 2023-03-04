@@ -25,7 +25,11 @@ public class GetStockMapQueryHandler : IRequestHandler<GetStockMapQuery, StocksM
 
         foreach (var stock in stocks)
         {
-            map.Rows[stock.Position.Y].Columns[stock.Position.X] = stock.Name;
+            map.Rows[stock.Position.Y].Cells[stock.Position.X] = new Cell()
+            {
+                Name = stock.Name,
+                CapacityPercentage = stock.CapacityPercentage
+            };
         }
 
         return map;

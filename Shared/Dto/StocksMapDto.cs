@@ -16,5 +16,21 @@ public class StocksMapDto
 
 public class StockRow
 {
-    public string[] Columns { get; set; } = new string[10];
+    public Cell[] Cells { get; set; }
+
+    public StockRow()
+    {
+        Cells = new Cell[10];
+
+        for (int i = 0; i < Cells.Length; i++)
+        {
+            Cells[i] = new Cell();
+        }
+    }
+}
+
+public class Cell
+{
+    public string Name { get; set; }
+    public decimal CapacityPercentage { get; set; }
 }
