@@ -1,10 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Enum;
-using Infrastructure.Persistence;
-using Infrastructure.Repositories.ProductRepositories;
-using Microsoft.EntityFrameworkCore;
-
-namespace API.Services;
+﻿namespace API.Services;
 
 public class ABCService
 {
