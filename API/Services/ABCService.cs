@@ -11,6 +11,9 @@ public class ABCService
     private readonly WarehouseDbContext _context;
     private readonly IProductRepository _productRepository;
 
+    private readonly int amountWeight = 1;
+    private readonly int profitWeight = 2;
+
     public ABCService(WarehouseDbContext context, IProductRepository productRepository)
     {
         _context = context;
@@ -24,24 +27,34 @@ public class ABCService
             .Include(p => p.StockItems).ThenInclude(i => i.Movements)
             .ToListAsync();
 
-        var productsProfits = CalculateProductsProfit(products)
-            .OrderByDescending(p => p.CumulativeProfite)
+        var productsSummary = CalculateProductsProfit(products)
+            .OrderByDescending(p => p.Profite)
             .ToList();
 
-        var summaryProfit = productsProfits.Sum(p => p.CumulativeProfite);
+        var summaryProfit = productsSummary.Sum(p => p.Profite);
+        var summaryAmount = productsSummary.Sum(p => p.Amount);
 
-        productsProfits.ForEach(p => p.CalculatePercentage(summaryProfit));
+        productsSummary
+            .ForEach(p =>
+            {
+                p.CalculateProfitePercentage(summaryProfit);
+                p.CalculateAmountPercentage(summaryAmount);
+            });
 
+        ScoreProducts(productsSummary);
+
+        //TODO předělat aby pracovalo se skórem
         decimal currentPercentage = 0;
-        foreach (var productInfo in productsProfits)
+        foreach (var productInfo in productsSummary)
         {
-            ABC rating;
-            if (currentPercentage <= 20) rating = ABC.A;
-            else if (currentPercentage <= 55) rating = ABC.B;
-            else rating = ABC.C;
-
+            var rating = currentPercentage switch
+            {
+                <= 65 => ABC.A,
+                <= 90 => ABC.B,
+                _ => ABC.C,
+            };
             UpdateProductABCRating(productInfo.Product, rating);
-            currentPercentage += productInfo.Percentage;
+            currentPercentage += productInfo.ProfitePercentage;
         }
 
         await _productRepository.SaveAsync();
@@ -53,7 +66,7 @@ public class ABCService
         _productRepository.Update(product);
     }
 
-    private IEnumerable<ProductProfitDto> CalculateProductsProfit(List<Product> products)
+    private IEnumerable<ProductSummary> CalculateProductsProfit(List<Product> products)
     {
 
         foreach (var product in products)
@@ -65,25 +78,56 @@ public class ABCService
 
             var profit = amountIssued * product.Price.Amount; //TODO vzít profit a ne cenu
 
-            yield return new(product, profit);
+            yield return new(product, profit, amountIssued);
+        }
+    }
+
+    private void ScoreProducts(IEnumerable<ProductSummary> products)
+    {
+        //bodování podle profitu
+        products.OrderByDescending(p => p.ProfitePercentage);
+
+        int profiteScore = products.Count() * profitWeight;
+        foreach (var product in products)
+        {
+            product.Score = profiteScore;
+            profiteScore -= profitWeight;
+        }
+
+        products.OrderByDescending(p => p.AmountPercentage);
+
+        int amountScore = products.Count() * amountWeight;
+        foreach (var product in products)
+        {
+            product.Score += amountScore;
+            amountScore -= amountScore;
         }
     }
 }
 
-internal class ProductProfitDto
+internal class ProductSummary
 {
     public Product Product { get; set; }
-    public decimal CumulativeProfite { get; set; }
-    public decimal Percentage { get; private set; }
+    public decimal Profite { get; set; }
+    public decimal ProfitePercentage { get; private set; }
+    public int Amount { get; set; }
+    public decimal AmountPercentage { get; set; }
+    public int Score { get; set; }
 
-    public ProductProfitDto(Product product, decimal cumulativeProfite)
+    public ProductSummary(Product product, decimal profite, int amount)
     {
         Product = product;
-        CumulativeProfite = cumulativeProfite;
+        Profite = profite;
+        Amount = amount;
     }
 
-    public void CalculatePercentage(decimal summaryProfit)
+    public void CalculateProfitePercentage(decimal summaryProfit)
     {
-        Percentage = 100 * CumulativeProfite / summaryProfit;
+        ProfitePercentage = 100 * Profite / summaryProfit;
+    }
+
+    public void CalculateAmountPercentage(int summaryAmounts)
+    {
+        AmountPercentage = 100 * Amount / summaryAmounts;
     }
 }
