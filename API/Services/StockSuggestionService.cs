@@ -20,32 +20,38 @@ public class StockSuggestionService
         var stocks = await _stockRepository.GetAll($"{nameof(Stock.StockItems)}.{nameof(StockItem.Product)}");
         var product = await _productRepositry.Get(new Guid(productId));
 
-        //filtruju pokud se itemy vlezou a řadím podle toho kde je nejméně místa
-        var filteredStocks = stocks
-            .Where(s => s.FreeCapacity >= amount * product?.SpaceRequirements)
-            .OrderByDescending(s => s.CapacityPercentage);
+        //filturu podle polohy a ABC ratingu
+        var filteredStocks = stocks.Where(s => s.AccessRating >= ((int)product.ABCRating));
+
+        //filtruju pokud se itemy vlezou
+        filteredStocks = filteredStocks
+            .Where(s => s.FreeCapacity >= amount * product?.SpaceRequirements);
 
         if (!filteredStocks.Any()) return null;
 
-        var bestStock = filteredStocks.First();
+        var bestStocks = filteredStocks;
 
-        //filtruju stocky kde se již item nachází a řadím podle toho kde se ho nachází nejvíce
+        //filtruju stocky kde se již item nachází
         filteredStocks = filteredStocks
             .Where(s => s.StockItems.Any(i => i.ProductId.ToString() == productId))
             .OrderByDescending(s => s.StockItems.Sum(i => i.Amount));
 
-        if (!filteredStocks.Any()) return bestStock;
+        if (!filteredStocks.Any()) return SortAndFindBestStock(bestStocks);
 
-        bestStock = filteredStocks.First();
+        bestStocks = filteredStocks;
 
         //hledám pokud neexistuje stock, který obsahuje pouze jeden druh produtku
         filteredStocks = filteredStocks
             .Where(s => s.StockItems
-                .All(i => i.ProductId == s.StockItems.First().ProductId))
-            .OrderByDescending(s => s.CapacityPercentage);
+                .All(i => i.ProductId == s.StockItems.First().ProductId));
 
-        if (!filteredStocks.Any()) return bestStock;
+        if (!filteredStocks.Any()) return SortAndFindBestStock(bestStocks);
 
-        return filteredStocks.First();
+        return SortAndFindBestStock(filteredStocks);
+    }
+
+    private Stock SortAndFindBestStock(IEnumerable<Stock> stocks)
+    {
+        return stocks.OrderByDescending(s => s.CapacityPercentage).ThenBy(s => s.AccessRating).First();
     }
 }

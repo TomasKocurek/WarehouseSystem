@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Domain.Enum;
+
+namespace Domain.Entities;
 
 public class Product : Entity<Guid>
 {
@@ -8,6 +10,8 @@ public class Product : Entity<Guid>
 
     [Obsolete("Přejít na PackageSize")]
     public decimal SpaceRequirements { get; set; }
+    public Money Price { get; set; }
+    public ABC ABCRating { get; set; } = ABC.C;
 
     public Product(string name, Size packageSize)
     {

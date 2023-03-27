@@ -27,7 +27,8 @@ public partial class ReceiptForm : ComponentBase
     {
         if (itemsToReceipt.Any())
         {
-            model.ReceiptItems = itemsToReceipt;
+            model.ReceiptItems = itemsToReceipt.ConvertAll(i => new ReceiptItemDto(i.ProductId, i.Amount, i.ReceiptStock?.StockId));
+            ;
             await _movementsService.Receipt(model);
         }
 
@@ -82,10 +83,7 @@ public partial class ReceiptForm : ComponentBase
         [Required(ErrorMessage = "Enter invoice data")]
         public DateTime Date { get; set; } = DateTime.Now;
 
-        [Required(ErrorMessage = "Select stock")]
-        public string StockId { get; set; }
-
-        public List<ReceiptItem> ReceiptItems { get; set; } = new();
+        public List<ReceiptItemDto> ReceiptItems { get; set; } = new();
     }
 }
 
@@ -106,5 +104,19 @@ internal class ReceiptStock
     {
         StockId = stockId;
         Name = name;
+    }
+}
+
+internal class ReceiptItemDto
+{
+    public string ProductId { get; set; }
+    public int Amount { get; set; }
+    public string? StockId { get; set; }
+
+    public ReceiptItemDto(string productId, int amount, string stockId)
+    {
+        ProductId = productId;
+        Amount = amount;
+        StockId = stockId;
     }
 }

@@ -54,4 +54,11 @@ public class ProductsController : ControllerBase
     {
         return Ok(await _mediator.Send(new GetProductByNameQuery(name)));
     }
+
+    [HttpPost("abc-update")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    public async Task<IActionResult> UpdateABCRatings()
+    {
+        return Accepted(await _mediator.Send(new UpdateABCRatingsCommand()));
+    }
 }

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    partial class WarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230304140415_AddedDateToMovements")]
+    partial class AddedDateToMovements
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,34 +127,6 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("StockItem");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.OwnsOne("Domain.Entities.Size", "PackageSize", b1 =>
-                        {
-                            b1.Property<Guid>("ProductId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<int>("Depth")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Height")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Width")
-                                .HasColumnType("int");
-
-                            b1.HasKey("ProductId");
-
-                            b1.ToTable("Products");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProductId");
-                        });
-
-                    b.Navigation("PackageSize")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>

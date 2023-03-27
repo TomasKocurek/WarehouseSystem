@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,6 +14,11 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasMany(p => p.StockItems)
                .WithOne(s => s.Product)
                .OnDelete(DeleteBehavior.Cascade);
+
+        builder.OwnsOne(p => p.Price);
+
+        builder.Property(p => p.ABCRating)
+            .HasDefaultValue(ABC.C);
 
         builder.OwnsOne(p => p.PackageSize);
     }

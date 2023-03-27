@@ -21,24 +21,6 @@
         </div>
     </div>
 
-    <div class="flex-container">
-        <div class="flex1">
-            @*Stock*@
-            <HxSelect 
-                TItem="StockDto" 
-                TValue="string" 
-                Label="Stock"
-                Data="@Stocks"
-                @bind-Value="@model.StockId"
-                TextSelector="@(i => i.Name)"
-                ValueSelector="@(i => i.Id.ToString())"
-                Nullable="true"
-                NullText="Select stock"
-                NullDataText="Loading stocks"/>
-        </div>
-        <div class="flex1"></div>
-    </div>
-
     
     @*Add new item to receipt*@
     <div class="flex-container">

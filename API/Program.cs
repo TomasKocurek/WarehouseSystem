@@ -30,6 +30,7 @@ builder.Services.AddAutoMapper(
     typeof(StockProfile));
 
 builder.Services.AddScoped<StockSuggestionService>();
+builder.Services.AddScoped<ABCService>();
 
 var app = builder.Build();
 
