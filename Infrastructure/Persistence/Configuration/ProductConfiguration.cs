@@ -17,6 +17,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.OwnsOne(p => p.Price);
 
-        builder.Property(p => p.ABCRating).HasDefaultValue(ABC.C);
+        builder.Property(p => p.ABCRating)
+            .HasDefaultValue(ABC.C);
+
+        builder.OwnsOne(p => p.PackageSize);
     }
 }

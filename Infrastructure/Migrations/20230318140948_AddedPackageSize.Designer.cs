@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(WarehouseDbContext))]
-    partial class WarehouseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230318140948_AddedPackageSize")]
+    partial class AddedPackageSize
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,9 +29,6 @@ namespace Infrastructure.Migrations
 
                     b.Property<int>("Amount")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("StockItemId")
                         .HasColumnType("char(36)");
@@ -49,11 +48,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
-
-                    b.Property<int>("ABCRating")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(2);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -152,31 +146,6 @@ namespace Infrastructure.Migrations
                         });
 
                     b.Navigation("PackageSize")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.OwnsOne("Domain.Entities.Money", "Price", b1 =>
-                        {
-                            b1.Property<Guid>("ProductId")
-                                .HasColumnType("char(36)");
-
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("decimal(65,30)");
-
-                            b1.Property<int>("Currency")
-                                .HasColumnType("int");
-
-                            b1.HasKey("ProductId");
-
-                            b1.ToTable("Products");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ProductId");
-                        });
-
-                    b.Navigation("Price")
                         .IsRequired();
                 });
 
