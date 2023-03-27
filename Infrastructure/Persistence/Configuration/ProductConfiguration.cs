@@ -13,5 +13,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasMany(p => p.StockItems)
                .WithOne(s => s.Product)
                .OnDelete(DeleteBehavior.Cascade);
+
+        builder.OwnsOne(p => p.PackageSize);
     }
 }
