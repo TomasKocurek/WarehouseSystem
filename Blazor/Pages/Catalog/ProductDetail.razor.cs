@@ -31,8 +31,10 @@ public partial class ProductDetail : ComponentBase
         product = await _productsService.GetProductById(Id!);
         model = new(product.Name)
         {
-            SpaceRequirements = product.SpaceRequirements,
-            Price = product.Price.Amount
+            Price = product.Price.Amount,
+            Height = product.PackageSize.Height,
+            Depth = product.PackageSize.Depth,
+            Width = product.PackageSize.Width,
         };
         SaveBtnEnabled = false;
         StocksHidden = false;
@@ -45,8 +47,8 @@ public partial class ProductDetail : ComponentBase
         var command = new
         {
             model.Name,
-            model.SpaceRequirements,
-            Price = new Money(model.Price)
+            Price = new Money(model.Price),
+            PackageSize = new Size(model.Height, model.Width, model.Depth)
         };
 
         await _productsService.CreateNewProduct(command);
@@ -77,10 +79,18 @@ internal class FormModel
 {
     [Required(ErrorMessage = "Enter name")]
     public string Name { get; set; }
-    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
-    public decimal SpaceRequirements { get; set; }
+
     [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
     public decimal Price { get; set; }
+
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public int Height { get; set; }
+
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public int Width { get; set; }
+
+    [Range(1, int.MaxValue, ErrorMessage = "Enter number bigger then 0")]
+    public int Depth { get; set; }
 
     public FormModel() { }
 
