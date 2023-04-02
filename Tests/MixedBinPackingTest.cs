@@ -9,8 +9,8 @@ public class MixedBinPackingTest
     {
         List<ProductToPackDto> products = new List<ProductToPackDto>
         {
-            new ProductToPackDto { Amount = 4, PackageSize = new(15, 20, 20), ProductId = "aaa" },
-            new ProductToPackDto { Amount = 3, PackageSize = new(15, 25, 10), ProductId = "bbb" }
+            new ProductToPackDto("aaa",  new(15, 20, 20), 4),
+            new ProductToPackDto("bbb", new(15, 25, 10), 3)
         };
 
         IBinPackingService packingService = new MixedBinPackingService();

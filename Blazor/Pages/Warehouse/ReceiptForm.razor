@@ -58,12 +58,6 @@
             </HxGridColumn>
 
             <HxGridColumn HeaderText="Id" ItemTextSelector="@(i => i.ProductId)" SortKeySelector="@(i => i.ProductId)"/>
-            <HxGridColumn HeaderText="Stock" ItemTextSelector="@(i => i.ReceiptStock?.Name ?? "none")" SortKeySelector="@(i => i.ReceiptStock.Name)"/>
-            <HxContextMenuGridColumn TItem="ReceiptItem" Context="item">
-                <HxContextMenu>
-                    <HxContextMenuItem Text="Suggest stock" Icon="BootstrapIcon.Question" OnClick="() => SuggestStock(item)"/>
-                </HxContextMenu>
-            </HxContextMenuGridColumn>
         </Columns>
     </HxGrid>
     

@@ -4,15 +4,14 @@ namespace API.Services.BinPackingService;
 
 public class MixedBinPackingService : IBinPackingService
 {
-    public int BinWidth { get; }
-    public int BinDepth { get; }
-
+    private readonly int binWidth;
+    private readonly int binDepth;
     private readonly decimal ratio;
 
-    public MixedBinPackingService(int binWidth = 100, int binHeight = 100, decimal ratio = (decimal)1)
+    public MixedBinPackingService(int binWidth = 100, int binDepth = 100, decimal ratio = 1)
     {
-        BinWidth = binWidth;
-        BinDepth = binHeight;
+        this.binWidth = binWidth;
+        this.binDepth = binDepth;
         this.ratio = ratio;
     }
 
@@ -33,7 +32,7 @@ public class MixedBinPackingService : IBinPackingService
 
     private Bin FillBin(List<ProductToPackDto> products)
     {
-        BinMap map = new(BinWidth, BinDepth, ratio);
+        BinMap map = new(this.binWidth, this.binDepth, ratio);
         List<BinProduct> binProducts = new();
 
         foreach (ProductToPackDto product in products)
