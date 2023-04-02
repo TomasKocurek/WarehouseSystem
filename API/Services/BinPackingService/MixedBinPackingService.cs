@@ -34,7 +34,7 @@ public class MixedBinPackingService : IBinPackingService
     private Bin FillBin(List<ProductToPackDto> products)
     {
         BinMap map = new(BinWidth, BinDepth, ratio);
-        Bin bin = new();
+        List<BinProduct> binProducts = new();
 
         foreach (ProductToPackDto product in products)
         {
@@ -45,8 +45,8 @@ public class MixedBinPackingService : IBinPackingService
 
                 if (result)
                 {
-                    product.Amount -= 1;
-                    bin.Products.Add(new(product.ProductId, 1));
+                    product.Amount--;
+                    binProducts.Add(new(product.ProductId, 1));
                 }
                 else
                 {
@@ -56,6 +56,18 @@ public class MixedBinPackingService : IBinPackingService
         }
 
         products.RemoveAll(p => p.Amount == 0);
+
+        Bin bin = new();
+
+        var groupedProducts = binProducts.GroupBy(p => p.ProductId);
+        foreach (var group in groupedProducts)
+        {
+            bin.Products.Add(new(group.Key, group.Sum(p => p.Amount)));
+        }
+
+        bin.BinType = groupedProducts.Count() == 1
+            ? BinType.SingleProduct
+            : BinType.MixedProduct;
 
         return bin;
     }
@@ -112,29 +124,6 @@ public class MixedBinPackingService : IBinPackingService
             for (int column = columnIndex; column < columnIndex + width; column++)
             {
                 map.Map[row, column] = true;
-            }
-        }
-    }
-
-    //TEST function
-    private void SaveBinToFile(bool[,] arr)
-    {
-        using (StreamWriter writer = new StreamWriter("C:\\Users\\tomas.kocurek\\Desktop\\bin.txt"))
-        {
-            for (int i = 0; i < arr.GetLength(0); i++)
-            {
-                for (int j = 0; j < arr.GetLength(1); j++)
-                {
-                    if (arr[i, j])
-                    {
-                        writer.Write("X ");
-                    }
-                    else
-                    {
-                        writer.Write("  ");
-                    }
-                }
-                writer.WriteLine();
             }
         }
     }

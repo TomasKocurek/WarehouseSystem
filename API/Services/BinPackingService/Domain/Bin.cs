@@ -3,6 +3,7 @@
 public class Bin
 {
     public List<BinProduct> Products { get; set; } = new();
+    public BinType BinType { get; set; } = BinType.MixedProduct;
 }
 
 public class BinProduct
@@ -15,4 +16,10 @@ public class BinProduct
         ProductId = productId;
         Amount = amount;
     }
+}
+
+public enum BinType
+{
+    SingleProduct,
+    MixedProduct
 }
