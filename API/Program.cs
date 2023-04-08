@@ -1,4 +1,5 @@
 using API.Services;
+using API.Services.DispatchProductService;
 using Infrastructure.Extensions;
 using MediatR;
 using Shared.Mapping;
@@ -27,10 +28,12 @@ builder.Services.AddAutoMapper(
     typeof(MovementProfile),
     typeof(ProductProfile),
     typeof(StockItemProfile),
-    typeof(StockProfile));
+    typeof(StockProfile),
+    typeof(OrderProfile));
 
 builder.Services.AddScoped<StockSuggestionService>();
 builder.Services.AddScoped<ABCService>();
+builder.Services.AddScoped<DispatchProductService>();
 
 var app = builder.Build();
 

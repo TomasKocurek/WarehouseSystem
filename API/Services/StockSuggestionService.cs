@@ -1,7 +1,7 @@
-﻿using API.Services.BinPackingService.Domain;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Infrastructure.Repositories.ProductRepositories;
 using Infrastructure.Repositories.StockRepositories;
+using Shared.Dto;
 
 namespace API.Services;
 

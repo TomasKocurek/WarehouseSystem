@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Persistence;
 using Infrastructure.Repositories.MovementRepositories;
+using Infrastructure.Repositories.OrderRepositories;
 using Infrastructure.Repositories.ProductRepositories;
 using Infrastructure.Repositories.StockItemRepositories;
 using Infrastructure.Repositories.StockRepositories;
@@ -25,6 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IStockItemRepository, StockItemRepository>();
         services.AddScoped<IMovementRepository, MovementRepository>();
         services.AddScoped<IStockRepository, StockRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
 
         return services;
     }

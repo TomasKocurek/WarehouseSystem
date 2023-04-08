@@ -1,4 +1,5 @@
 ﻿using API.Services.BinPackingService.Domain;
+using Shared.Dto;
 
 namespace API.Services.BinPackingService;
 
