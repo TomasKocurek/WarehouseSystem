@@ -27,7 +27,7 @@ public partial class ReceiptForm : ComponentBase
     {
         if (itemsToReceipt.Any())
         {
-            model.ReceiptItems = itemsToReceipt.ConvertAll(i => new ReceiptItemDto(i.ProductId, i.Amount, i.ReceiptStock?.StockId));
+            model.ReceiptItems = itemsToReceipt.ConvertAll(i => new ReceiptItemDto(i.ProductId, i.Amount));
             ;
             await _movementsService.Receipt(model);
         }
@@ -43,23 +43,6 @@ public partial class ReceiptForm : ComponentBase
     private void HandleChange(ReceiptItem newReceiptItem)
     {
         selectedItem = newReceiptItem;
-    }
-
-    private async Task SuggestStock(ReceiptItem item)
-    {
-        var command = new
-        {
-            item.ProductId,
-            item.Amount
-        };
-
-        var stock = await _stocksService.SuggestStock(command);
-
-        if (stock != null)
-        {
-            item.ReceiptStock = new(stock.Id.ToString(), stock.Name);
-            await grid!.RefreshDataAsync();
-        }
     }
 
     private void ReceiptNext()
@@ -92,31 +75,16 @@ internal class ReceiptItem
     public string ProductId { get; set; }
     public string Name { get; set; }
     public int Amount { get; set; }
-    public ReceiptStock? ReceiptStock { get; set; }
-}
-
-internal class ReceiptStock
-{
-    public string StockId { get; set; }
-    public string Name { get; set; }
-
-    public ReceiptStock(string stockId, string name)
-    {
-        StockId = stockId;
-        Name = name;
-    }
 }
 
 internal class ReceiptItemDto
 {
     public string ProductId { get; set; }
     public int Amount { get; set; }
-    public string? StockId { get; set; }
 
-    public ReceiptItemDto(string productId, int amount, string stockId)
+    public ReceiptItemDto(string productId, int amount)
     {
         ProductId = productId;
         Amount = amount;
-        StockId = stockId;
     }
 }

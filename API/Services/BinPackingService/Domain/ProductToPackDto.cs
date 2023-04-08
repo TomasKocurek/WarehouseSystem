@@ -8,6 +8,13 @@ public class ProductToPackDto
     public Size PackageSize { get; set; }
     public int Amount { get; set; }
 
+    public ProductToPackDto(string productId, Size packageSize, int amount)
+    {
+        ProductId = productId;
+        PackageSize = packageSize;
+        Amount = amount;
+    }
+
     public int MapWidht { get; private set; }
     public int MapDepth { get; private set; }
 

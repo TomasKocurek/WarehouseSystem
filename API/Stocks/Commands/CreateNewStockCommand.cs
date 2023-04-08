@@ -9,7 +9,7 @@ public class CreateNewStockCommand : IRequest<ResultCreated<string>>
 {
     public string Name { get; set; }
     public string Description { get; set; } = string.Empty;
-    public decimal Capacity { get; set; }
+    public int Capacity { get; set; }
     public Position? Position { get; set; }
 }
 
