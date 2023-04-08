@@ -38,6 +38,7 @@ public class ReceiptCommandHandler : IRequestHandler<ReceiptCommand>
             foreach (var product in bin.Products)
             {
                 StockItem stockItem = StockItem.ReceiptItem("", product.Amount, product.ProductId, stock.Id.ToString());
+                stock.AddBin(1);
                 _stockItemRepository.Add(stockItem);
             }
         }

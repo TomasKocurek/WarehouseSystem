@@ -28,11 +28,10 @@ public class StockSuggestionService
         var filteredStocks = stocks.Where(s => s.AccessRating >= averageABC);
 
         //filtruju pokud se itemy vlezou
-        //TODO vyřešit kapacitu
-        //filteredStocks = filteredStocks
-        //    .Where(s => s.FreeCapacity >= amount * product?.SpaceRequirements);
+        filteredStocks = filteredStocks
+            .Where(s => s.FreeCapacity >= 1);
 
-        //if (!filteredStocks.Any()) return null;
+        if (!filteredStocks.Any()) return null;
 
         var bestStocks = filteredStocks;
 
