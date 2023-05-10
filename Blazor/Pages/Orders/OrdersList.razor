@@ -1,0 +1,23 @@
+﻿@page "/orders"
+@using Shared.Dto;
+@inject NavigationManager _navManager
+@inject OrdersService _orderService
+
+<PageTitle>Orders</PageTitle>
+
+<div class="flex-container">
+    <div class="flex1">
+        <HxButton Text="New" OnClick="@OpenNewOrder" Color="ThemeColor.Primary" />
+    </div>
+    <div class="flex1">
+        <HxButton Text="Ship" OnClick="@ShipSelectedOrders" Color="ThemeColor.Primary" />
+    </div>
+</div>
+
+<HxGrid TItem="OrderListDto" MultiSelectionEnabled="true" @bind-SelectedDataItems="selectedOrders" Responsive="true" DataProvider="GetGridData" PageSize="25">
+    <Columns>
+        <HxGridColumn HeaderText="Name" ItemTextSelector="@(i => i.Name)" SortKeySelector="@(i => i.Name)" IsDefaultSortColumn="true" />
+        <HxGridColumn HeaderText="Date" ItemTextSelector="@(i => i.Date.ToShortDateString())" SortKeySelector="@(i => i.Date)" />
+        <HxGridColumn HeaderText="Status" ItemTextSelector="@(i => i.Status.ToString())" SortKeySelector="@(i => i.Status)" />
+    </Columns>
+</HxGrid>

@@ -1,4 +1,4 @@
-﻿namespace API.Services.BinPackingService.Domain;
+﻿namespace Shared.Dto;
 
 public class Bin
 {

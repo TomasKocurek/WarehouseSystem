@@ -13,6 +13,7 @@ builder.Services.AddScoped<ProductsService>();
 builder.Services.AddScoped<StockItemsService>();
 builder.Services.AddScoped<StocksService>();
 builder.Services.AddScoped<MovementsService>();
+builder.Services.AddScoped<OrdersService>();
 
 // Add havit components
 builder.Services.AddHxServices();

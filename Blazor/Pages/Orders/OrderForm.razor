@@ -1,0 +1,63 @@
+﻿@page "/orders/new"
+@using Blazor.Pages.Components
+@inject OrdersService _ordersService
+@inject NavigationManager _navNamager
+
+<PageTitle>New order</PageTitle>
+
+<EditForm Model="model" OnValidSubmit="CreateOrderAsync">
+    <DataAnnotationsValidator/>
+
+    <div class="flex-container">
+        <div class="flex1">
+            @*Order name*@
+            <HxInputText @bind-Value="model.Name" Label="Order name"/>
+        </div>
+        <div class="flex1">
+            @*Order name*@
+            <HxInputDate @bind-Value="model.Date" Label="Order date" MaxDate="@DateTime.Today" />
+        </div>
+
+    </div>
+
+    @*Add new item to order*@
+    <div class="flex-container">
+        <div class="flex1">
+            <ProductSearchBar @ref="productSearchBar"/>
+        </div>
+        <div class="flex1">
+            <HxButton Text="Add" OnClick="@AddItem" Color="ThemeColor.Primary" />
+        </div>
+    </div>
+
+    @*Grid with order items*@
+    <HxGrid
+        TItem="OrderItemListDto"
+        SelectedDataItem="selectedItem"
+        SelectedDataItemChanged="HandleGridSelectionChange"
+        DataProvider="GetGridData"
+        Responsive="true"
+        PageSize="25"
+        @ref="grid"
+    >
+        <Columns>
+            <HxGridColumn HeaderText="Product name" ItemTextSelector="@(i => i.ProductName)" SortKeySelector="@(i => i.ProductName)" IsDefaultSortColumn=true/>
+        
+            <HxGridColumn HeaderText="Amount" SortKeySelector="@(i => i.Amount)">
+                <ItemTemplate Context="item">
+                    @if (selectedItem == item)
+                    {
+                        <HxInputNumber @bind-Value="item.Amount" />
+                    }
+                    else
+                    {
+                        <div>@item?.Amount</div>
+                    }
+                </ItemTemplate>
+            </HxGridColumn>
+        </Columns>
+    </HxGrid>
+
+    <HxSubmit CssClass="btn-margin" Text="Save" Color="ThemeColor.Primary" />
+
+</EditForm>

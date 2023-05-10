@@ -1,0 +1,50 @@
+@startuml Warehouse system Architecture
+
+skinparam linetype ortho
+
+frame "Prezentační vrstva" {
+
+component "Razor pages" as razor
+
+component "Blazor Components" as blazor
+
+component "API Servisy" as api
+
+razor -r- blazor
+blazor -r- api
+
+}
+
+frame "Bussines vrstva"{
+    component "API Kontrolery" as controller
+
+    component MediatR as mediatr
+
+    frame "Event handlers" {
+        component Commands as command
+        component Queries as query
+    }
+
+    controller -r- mediatr
+    mediatr -d- command
+    mediatr -d- query
+}
+
+frame "Persistenční vrstva"{
+    component "Repozitáře" as repository
+
+}
+
+frame "Datová vrstva" {
+    component "WarehouseDbContext" as context
+
+}
+
+api -d- controller
+
+command -d- repository
+query -d- repository
+repository -d- context
+
+
+@enduml
