@@ -1,0 +1,33 @@
+@startuml Repository
+
+interface IStockRepository{
+    --
+    + Task<List<Stock>> GetAll()
+    + Task<List<Stock>> GetFreeStocks()
+}
+
+class StockRepository {
+    --
+    + Task<List<Stock>> GetAll()
+    + Task<List<Stock>> GetFreeStocks()
+}
+
+class WarehouseDbContext
+
+interface IBasicCrudRepository{
+    --
+    + Task<List<T>> GetAll()
+}
+
+class BasicCrudRepository{
+    --
+    + Task<List<T>> GetAll()
+}
+
+IBasicCrudRepository <|.d. IStockRepository
+IBasicCrudRepository <|.r. BasicCrudRepository
+IStockRepository <|.r. StockRepository
+BasicCrudRepository <|-d- StockRepository
+StockRepository -r- WarehouseDbContext
+
+@enduml

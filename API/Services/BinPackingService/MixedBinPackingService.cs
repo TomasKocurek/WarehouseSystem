@@ -81,6 +81,8 @@ public class MixedBinPackingService : IBinPackingService
                 int validRows = 0;
                 for (int rowOffset = row; row < map.Map.GetLength(0); rowOffset++)
                 {
+                    if (row + depth >= map.Map.GetLength(0)) break;
+
                     var rowResult = CheckPackageWidth(rowOffset, column, width, map);
 
                     if (!rowResult) break;

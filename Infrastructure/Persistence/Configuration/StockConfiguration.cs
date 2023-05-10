@@ -7,6 +7,8 @@ internal class StockConfiguration : IEntityTypeConfiguration<Stock>
 {
     public void Configure(EntityTypeBuilder<Stock> builder)
     {
+        builder.ToTable("Stocks");
+
         builder.OwnsOne(s => s.Position);
     }
 }

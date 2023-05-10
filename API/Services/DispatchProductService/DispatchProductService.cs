@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Shared.Dto;
 
 namespace API.Services.DispatchProductService;
@@ -14,9 +15,12 @@ public class DispatchProductService
 
     public List<LoadingItemDto> DispatchItems(List<ProductToDispatch> productsToDispatch)
     {
-        //najdu všechny potřebné produkty + jejich umístění ve skladu
+        //vezmu všechny stocky a seřadím je podle jejich priority
+        var stocks = _context.Stocks
+            .Include(s => s.StockItems)
+            .OrderBy(s => s.AccessRating);
 
-        //vyberu ideální stock itemy
+        //najdu ideální stockItemy
 
         //odepíšu itemy ze skladu
 

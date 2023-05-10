@@ -135,7 +135,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stock");
+                    b.ToTable("Stocks", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.StockItem", b =>
@@ -260,7 +260,7 @@ namespace Infrastructure.Migrations
 
                             b1.HasKey("StockId");
 
-                            b1.ToTable("Stock");
+                            b1.ToTable("Stocks");
 
                             b1.WithOwner()
                                 .HasForeignKey("StockId");

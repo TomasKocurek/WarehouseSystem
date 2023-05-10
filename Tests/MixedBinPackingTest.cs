@@ -18,4 +18,19 @@ public class MixedBinPackingTest
 
         Assert.Single(bins);
     }
+
+    [Fact]
+    public void PaperTest()
+    {
+        List<ProductToPackDto> products = new()
+        {
+            new("A4", new(20,21,29), 10),
+            new("A3", new(20,29,42), 5),
+        };
+
+        IBinPackingService packingService = new MixedBinPackingService();
+        var bins = packingService.SortProductsIntoBins(products);
+
+        Assert.Equal(2, bins.Count);
+    }
 }
